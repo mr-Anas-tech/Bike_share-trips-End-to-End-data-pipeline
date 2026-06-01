@@ -1,5 +1,5 @@
 with region as(
-    select * from{{ source('raw_bikeshare_trips','raw_region')}}
+    select * from{{ source('raw_bikeshare_trips', 'raw_region')}}
 ),
 
 clean_region as(
