@@ -1,1 +1,1 @@
-select * from  {{ source('raw_bikeshare_trips', 'raw_trips')}}
+select * from  {{ source('raw_bikeshare_trips', 'raw_trips') }}
