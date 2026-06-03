@@ -26,7 +26,13 @@ date_cal as(
     member_birth_year,
     member_gender,
     start_station_id,
-    end_station_id
+    end_station_id,
+    start_station_geom,
+    end_station_geom,
+    start_station_latitude,
+    end_station_latitude,
+    start_station_longitude,
+    end_station_longitude
     from trips 
 )
 

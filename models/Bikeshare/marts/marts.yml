@@ -1,0 +1,68 @@
+version: 2
+
+models:
+  - name: dim_bikeshare_station
+    description: "Master dimension table containing cleaned and verified bike sharing station details, enriched with regional geographic locations."
+    columns:
+      - name: station_id
+        description: "Primary key. Unique identifier for each bike sharing station."
+        tests:
+          - unique
+          - not_null
+      - name: station_name
+        description: "The full official name of the bike sharing station."
+      - name: station_short_name
+        description: "The abbreviated or short reference name of the station."
+      - name: station_latitude
+        description: "Cleaned and verified latitude coordinate of the station location."
+      - name: station_longitude
+        description: "Cleaned and verified longitude coordinate of the station location."
+      - name: station_capacity
+        description: "The total number of bike docks or slots available at the station."
+      - name: has_kiosk
+        description: "Boolean flag indicating whether an electronic payment kiosk is present at the station."
+      - name: region_id
+        description: "Foreign key referencing the associated geographical region."
+      - name: region_name
+        description: "The name of the region or city boundary where the station operates."
+      - name: station_geom
+        description: "WKT/Native spatial geometry object for geographic map mapping and spatial analysis."
+
+  - name: fct_bikeshare_trips
+    description: "Core fact table accumulating transactional bike share rides, enriched with calculated dates, peak operational hours, and coalesced geographical lookups."
+    columns:
+      - name: trip_id
+        description: "Primary key. Unique identifier for each individual bike rental trip."
+        tests:
+          - unique
+          - not_null
+      - name: duration_sec
+        description: "The total length of the trip measured in seconds."
+      - name: duaration_minute
+        description: "The computed trip duration rounded down/up to minutes for reporting convenience."
+      - name: start_date
+        description: "The calendar date when the trip officially started."
+      - name: end_date
+        description: "The calendar date when the trip was completed."
+      - name: is_peak_hour
+        description: "Boolean indicator marking true if the trip started during industrial peak transit hours."
+      - name: bike_number
+        description: "Unique identifier asset number of the bicycle used for the trip."
+      - name: subscriber_type
+        description: "The commercial category of the user membership (e.g., Customer or Subscriber)."
+      - name: start_station_id
+        description: "Foreign key linking back to dim_bikeshare_station indicating the origin."
+      - name: end_station_id
+        description: "Foreign key linking back to dim_bikeshare_station indicating the destination."
+      - name: clean_start_station_geom
+        description: "Coalesced spatial geometry object for the trip's starting station, fallback to master lookup if missing."
+      - name: clean_end_station_geom
+        description: "Coalesced spatial geometry object for the trip's ending station, fallback to master lookup if missing."
+      - name: clean_start_station_latitude
+        description: "Final verified latitude coordinate for the trip's start point."
+      - name: clean_end_station_latitude
+        description: "Final verified latitude coordinate for the trip's end point."
+      - name: clean_start_station_longitude
+        description: "Final verified longitude coordinate for the trip's start point."
+      - name: clean_end_station_longitude
+        description: "Final verified longitude coordinate for the trip's end point."
