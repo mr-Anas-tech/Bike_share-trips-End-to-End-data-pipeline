@@ -1,5 +1,5 @@
 with stations as(
-    select * from{{ source('raw_bikeshare_trips', 'raw_stations')}}
+    select * from {{ source('raw_bikeshare_trips', 'raw_stations')}}
 ),
 
 clea_station as(

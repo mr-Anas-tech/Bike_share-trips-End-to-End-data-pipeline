@@ -1,19 +1,16 @@
 with trip as(
-    select * from
-    {{ ref('stg_raw_trips') }}
+    select * from {{ ref('int_trip_date_calculated') }}
 ),
 
 station_lookup as(
-    select * from{{ ref('int_station_region') }}
+    select * from {{ ref('int_station_region') }}
 ),
 
 final as(
     select 
-    t.trip_id,
-    t.start_station_id,
-    t.end_station_id,
-    coalesce(t.start_station_geom, s_start.station_geom) as clean_start_station_geom,
-    coalesce(t.end_station_geom, s_end.station_geom) as end_station_geom,
+    t.*,
+    coalesce(t.start_station_geom, s_start.station_geom) as clean_start_station_geom,                                                                                                                                                                                                                                         
+    coalesce(t.end_station_geom, s_end.station_geom) as clean_end_station_geom,
     coalesce(t.start_station_latitude, s_start.station_latitude) as clean_start_station_latitude,
     coalesce(t.end_station_latitude, s_end.station_latitude ) as clean_end_station_latitude,
     coalesce(t.start_station_longitude, s_start.station_longitude) as clean_start_station_longitude,
@@ -25,4 +22,5 @@ final as(
     on t.end_station_id = s_end.station_id
 )
 
-select * from final
+
+select * from  final

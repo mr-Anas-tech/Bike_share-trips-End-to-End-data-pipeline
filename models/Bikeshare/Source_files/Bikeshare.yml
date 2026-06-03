@@ -1,8 +1,14 @@
+version: 2
+
 sources:
   - name: raw_bikeshare_trips
     database: dbt-learning-493706
     schema: raw_bikeshare_trips
+
     tables:
       - name: raw_region
+
       - name: raw_stations
+
       - name: raw_trips
+        description: "Raw transactional bike sharing trips data streaming into BigQuery."
