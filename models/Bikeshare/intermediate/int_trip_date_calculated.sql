@@ -7,10 +7,12 @@ date_cal as(
     select 
     trip_id,
     duration_sec,
-    round(duration_sec/60, 2) as duaration_minute,
+    round(duration_sec/60, 2) as duration_minute,
     start_date,
     end_date,
     start_date_time,
+    coalesce(start_station_name, 'Unknown') as start_station_name,
+     coalesce(end_station_name, 'Unknown') as end_station_name,
     end_date_time,
     extract(hour from start_date_time) as start_date_hour,
     extract(hour from end_date_time) as end_date_hour,
